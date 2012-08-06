@@ -1,0 +1,26 @@
+$LOGO-SIZE=50px
+$LOGO-COLOR=#05C5CA
+
+#logo
+  position relative
+  width $LOGO-SIZE
+  height @width
+  line-height @width
+  font-family monospace
+  font-size $LOGO-SIZE * 0.9
+  background-color $LOGO-COLOR
+  color white
+  text-align center
+  border-radius $LOGO-SIZE * 0.15
+  text-shadow 1px 1px 2px rgba(0,0,0,0.5)
+
+  &:before
+    content: "#"
+  &:after
+    content: ""
+    position absolute
+    border-width $LOGO-SIZE * 0.1
+    bottom -(@border-width * 2)
+    right (@border-width * 2)
+    border-style solid
+    border-color $LOGO-COLOR transparent transparent
