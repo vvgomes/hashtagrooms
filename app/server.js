@@ -38,7 +38,10 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
+app.get('/login', routes.login);
+app.get('/auth/twitter', routes.twitterAuth);
+app.get('/auth/twitter/callback', routes.twitterCallback);
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+  console.log('Express server listening on port ' + app.get('port'));
 });
