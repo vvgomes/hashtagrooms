@@ -1,5 +1,38 @@
+@import 'nib'
+global-reset()
+
+$HEADER-HEIGHT = 40px
+$DEFAULT-SPACING = 10px
+
+*
+  box-sizing border-box
+
 body
-  padding: 50px
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
-a
-  color: #00B7FF
+  font-family 'Helvetica Neue', Arial, sans-serif
+  background #C0DEED url('http://a0.twimg.com/images/themes/theme1/bg.png') fixed no-repeat
+
+
+header
+  fixed top 0 left 0
+  width 100%
+  height $HEADER-HEIGHT
+  color #CCC
+  font-size 13px
+  background linear-gradient(#444, #111)
+  box-shadow 0 0 10px black
+  #logo
+    float left
+  #identity
+    float right
+
+section#main
+  width 900px
+  height 100%
+  margin 0 auto 0 auto
+  background rgba(white, 0.3)
+  padding ($HEADER-HEIGHT + $DEFAULT-SPACING) $DEFAULT-SPACING (4 * $DEFAULT-SPACING) $DEFAULT-SPACING
+  border-radius 0 0 $DEFAULT-SPACING $DEFAULT-SPACING
+
+  #send
+    absolute bottom $DEFAULT-SPACING left $DEFAULT-SPACING
+    right $DEFAULT-SPACING

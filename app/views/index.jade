@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  header
+    #logo HashtagRooms
+    span#identity
+      img(src='http://www.gravatar.com/avatar/6dad57e4d583215bb8fabd1164fb809d?s=24&d=mm')
+      | @gtramont
+  section#main
+    ol#messages
+      li
+        span.timestamp 22:22:22
+        span.message Hey muthafucka!
+    input#send(type='text')

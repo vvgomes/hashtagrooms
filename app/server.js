@@ -2,8 +2,17 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
+var nib = require('nib');
+var stylus = require('stylus');
 
 var app = express();
+
+function compile(str, path) {
+  return stylus(str)
+    .set('filename', path)
+    .set('compress', true)
+    .use(nib());
+}
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -16,8 +25,12 @@ app.configure(function(){
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
   app.use(app.router);
-  app.use(require('stylus').middleware(__dirname + '/public'));
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(stylus.middleware({
+    src: __dirname + '/../public',
+    compile: compile
+  }));
+  app.use(stylus.middleware(__dirname + '/../public'));
+  app.use(express.static(path.join(__dirname, '..', 'public')));
 });
 
 app.configure('development', function(){
