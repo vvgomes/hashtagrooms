@@ -48,8 +48,24 @@ describe('controller', function() {
   });
 
   describe('#auth', function() {
-    
+    describe('for a successful connection', function() {
+      it('should persist the authorization in the session');
+      it('should redirect to the twitter login url');
+    });
+
+    describe('for a failed connection', function() {
+      it('should redirect to /error');
+    });
   });
 
-  describe('#afterAuth', function() {});
+  describe('#afterAuth', function() {
+    describe('when authorized', function() {
+      it('should persist the access token in the session');
+      it('should redirect to /');
+    });
+
+    describe('when not authorized', function() {
+      it('should redirect to /error');
+    });
+  });
 });
