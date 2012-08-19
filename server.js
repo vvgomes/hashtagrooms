@@ -1,9 +1,8 @@
 var express = require('express');
-var routes = require('./routes');
 var http = require('http');
 var path = require('path');
-var nib = require('nib');
 var stylus = require('stylus');
+var nib = require('nib');
 
 var app = express();
 
@@ -16,7 +15,8 @@ function compile(str, path) {
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/views');
+  app.set('host', require('os').hostname());
+  app.set('views', __dirname + '/app/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
   app.use(express.logger('dev'));
@@ -26,21 +26,18 @@ app.configure(function(){
   app.use(express.session());
   app.use(app.router);
   app.use(stylus.middleware({
-    src: __dirname + '/../public',
+    src: __dirname + '/public',
     compile: compile
   }));
-  app.use(stylus.middleware(__dirname + '/../public'));
-  app.use(express.static(path.join(__dirname, '..', 'public')));
+  app.use(stylus.middleware(__dirname + '/public'));
+  app.use(express.static(path.join(__dirname, 'public')));
 });
 
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
-app.get('/login', routes.login);
-app.get('/auth/twitter', routes.twitterAuth);
-app.get('/auth/twitter/callback', routes.twitterCallback);
+require(__dirname + '/app/controller')(app);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
