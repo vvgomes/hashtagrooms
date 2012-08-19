@@ -1,5 +1,5 @@
 var expect = require('expect.js');
-var twitterClient = require('../../app/models/twitter.client');
+var twitterClient = require(__dirname+'/../../app/models/twitter.client');
 
 describe('twitter client', function() {
   var client;

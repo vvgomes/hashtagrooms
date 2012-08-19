@@ -8,14 +8,14 @@ exports.create = function(domain, OAuth) {
     callback: 'http://'+domain+'/auth/twitter/callback'
   };
 
-  var client = {
+  var twitterApp = {
     key: process.env.HASHTAGROOMS_KEY,
     secret: process.env.HASHTAGROOMS_SECRET
   };
 
   var oauthClient = new OAuth(
     paths.requestToken, paths.accessToken, 
-    client.key, client.secret, '1.0', 
+    twitterApp.key, twitterApp.secret, '1.0', 
     paths.callback, 'HMAC-SHA1'
   );
 
