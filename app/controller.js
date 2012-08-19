@@ -1,7 +1,5 @@
-exports.create = function(app) {
+exports.create = function(client) {
   var controller = {};
-  var OAuth = require('oauth').OAuth;
-  var client = require(__dirname+'/models/twitter.client').create(domain(), OAuth);
 
   controller.index = function(req, res) {
     req.session.oauth ? res.render('index') : res.redirect('/login');
@@ -29,10 +27,6 @@ exports.create = function(app) {
       res.redirect( error ? '/error' : '/' );
     });
   };
-
-  function domain() {
-    return app.get('host') + ':' + app.get('port');
-  }
 
   return controller;
 };

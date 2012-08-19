@@ -4,6 +4,7 @@ var path = require('path');
 var stylus = require('stylus');
 var nib = require('nib');
 var os = require('os');
+var oauth = require('oauth').OAuth;
 
 var app = express();
 
@@ -38,7 +39,17 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-var controller = require(__dirname + '/app/controller').create(app);
+var factory = {
+  controller: require(__dirname+'/app/controller'),
+  twitter: require(__dirname+'/app/models/twitter.client')
+};
+
+// controller setup:
+var domain = app.get('host') + ':' + app.get('port');
+var client = factory.twitter.create(domain, oauth);
+var controller = factory.controller.create(client);
+
+// routes:
 app.get('/', controller.index);
 app.get('/login', controller.login);
 app.get('/error', controller.error);

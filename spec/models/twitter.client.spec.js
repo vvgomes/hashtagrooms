@@ -1,11 +1,11 @@
 var expect = require('expect.js');
-var twitterClient = require(__dirname+'/../../app/models/twitter.client');
+var factory = require(__dirname+'/../../app/models/twitter.client');
 
 describe('twitter client', function() {
   var client;
 
   beforeEach(function() {
-    client = twitterClient.create('foo.com:3000', fakeOauthClient);
+    client = factory.create('foo.com:3000', fakeOauthClient);
   });
 
   it('should request user`s authorization', function(done) {
