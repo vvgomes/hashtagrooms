@@ -1,11 +1,11 @@
-exports.create = function(appAddress) {
+exports.create = function(domain, OAuth) {
   var client = {};
 
   var paths = {
     auth: 'https://twitter.com/oauth/authenticate?oauth_token=',
     requestToken: 'https://api.twitter.com/oauth/request_token',
     accessToken: 'https://api.twitter.com/oauth/access_token',
-    callback: 'http://'+appAddress+'/auth/twitter/callback'
+    callback: 'http://'+domain+'/auth/twitter/callback'
   };
 
   var client = {
@@ -13,7 +13,7 @@ exports.create = function(appAddress) {
     secret: process.env.HASHTAGROOMS_SECRET
   };
 
-  var oauthClient = new (require('oauth').OAuth)(
+  var oauthClient = new OAuth(
     paths.requestToken, paths.accessToken, 
     client.key, client.secret, '1.0', 
     paths.callback, 'HMAC-SHA1'

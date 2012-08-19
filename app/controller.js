@@ -1,6 +1,7 @@
-module.exports = (function(app) {  
-  var appAdress = app.get('host') + ':' + app.get('port');
-  var client = require('./models/twitter.client').create(appAdress);
+module.exports = (function(app) {
+  var OAuth = require('oauth').OAuth;
+  var domain = app.get('host') + ':' + app.get('port');
+  var client = require('./models/twitter.client').create(domain, OAuth);
 
   app.get('/', function(req, res) {
     req.session.oauth ? res.render('index') : res.redirect('/login');

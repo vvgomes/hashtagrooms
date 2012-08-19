@@ -5,7 +5,7 @@ describe('twitter client', function() {
   var client;
 
   beforeEach(function() {
-    client = twitterClient.create('foo.com:3000');
+    client = twitterClient.create('foo.com:3000', fakeOauthClient);
   });
 
   it('should request user`s authorization', function(done) {
@@ -18,12 +18,23 @@ describe('twitter client', function() {
     });
   });
 
-  it('should access token from twitter', function(done) {
-    client.requestAccess(function(error, data) {
+    
+  it('should get access token from twitter', function(done) {
+    client.requestAccess({}, function(error, data) {
       expect(error).to.be(null);
       expect(data.token).to.be.ok;
       expect(data.secret).to.be.ok;
       done();
     });
   });
+
+  function fakeOauthClient() {
+    this.getOAuthRequestToken = function(cb) {
+      cb(null, 'token', 'secret');
+    };
+
+    this.getOAuthAccessToken = function(t, s, v, cb) {
+      cb(null, 'token', 'secret');
+    };
+  }
 });
