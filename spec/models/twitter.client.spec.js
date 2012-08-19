@@ -11,8 +11,8 @@ describe('twitter client', function() {
   it('should request user`s authorization', function(done) {
     client.requestAuthorization(function(error, data, url) {
       expect(error).to.be(null);
-      expect(data.token).to.be.ok;
-      expect(data.secret).to.be.ok;
+      expect(data.token).to.be.ok();
+      expect(data.secret).to.be.ok();
       expect(url).to.be('https://twitter.com/oauth/authenticate?oauth_token='+data.token);
       done();
     });
@@ -22,8 +22,8 @@ describe('twitter client', function() {
   it('should get access token from twitter', function(done) {
     client.requestAccess({}, function(error, data) {
       expect(error).to.be(null);
-      expect(data.token).to.be.ok;
-      expect(data.secret).to.be.ok;
+      expect(data.token).to.be.ok();
+      expect(data.secret).to.be.ok();
       done();
     });
   });
