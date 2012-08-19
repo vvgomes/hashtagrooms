@@ -20,7 +20,7 @@ exports.create = function(client) {
     });
   };
 
-  controller.afterAuth = function(req, res, next){
+  controller.afterAuth = function(req, res) {
     req.session.oauth.verifier = req.query.oauth_verifier
     client.requestAccess(req.session.oauth, function(error, access) {
       req.session.oauth.access = access;

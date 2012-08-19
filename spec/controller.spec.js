@@ -6,16 +6,18 @@ describe('controller', function() {
   var controller;
   var req;
   var res;
+  var client;
 
   beforeEach(function() {
-    controller = factory.create();
-    req = { session: {} };
+    client = fakeClient();
+    controller = factory.create(client);
+    req = { session: {}, query: {} };
     res = { render: sinon.spy(), redirect: sinon.spy() };
   });
 
   describe('#index', function() {
 
-    describe('when the user is not logged in', function() {
+    describe('when the user is not logge  d in', function() {
       it('should redirect to /login', function() {
         controller.index(req, res);
         expect(res.redirect.calledWith('/login')).to.be.ok();
@@ -30,7 +32,6 @@ describe('controller', function() {
         expect(res.render.calledWith('index')).to.be.ok();
       })
     });
-
   });
 
   describe('#login', function() {
@@ -48,24 +49,90 @@ describe('controller', function() {
   });
 
   describe('#auth', function() {
+
     describe('for a successful connection', function() {
-      it('should persist the authorization in the session');
-      it('should redirect to the twitter login url');
+      beforeEach(function() {
+        controller.auth(req, res);
+      });
+
+      it('should persist the authorization in the session', function() {
+        expect(req.session.oauth).to.be('oauth');
+      });
+      
+      it('should redirect to the twitter login url', function() {
+        expect(res.redirect.calledWith('twitter.com/oauth')).to.be.ok();
+      });
     });
 
     describe('for a failed connection', function() {
-      it('should redirect to /error');
+      beforeEach(function() {
+        makeClientTrhowErrorOn('requestAuthorization');
+        controller.auth(req, res);
+      });
+
+      it('should redirect to /error', function() {
+        expect(res.redirect.calledWith('/error')).to.be.ok();
+      });
     });
   });
 
   describe('#afterAuth', function() {
+    beforeEach(function() {
+      req.session.oauth = {};
+      req.query.oauth_verifier = 'verifier';
+    });
+
     describe('when authorized', function() {
-      it('should persist the access token in the session');
-      it('should redirect to /');
+      beforeEach(function() {
+        controller.afterAuth(req, res);
+      });
+
+      it('should persist the verifier in the session', function() {
+        expect(req.session.oauth.verifier).to.be('verifier');
+      });
+
+      it('should persist the access token in the session', function() {
+        expect(req.session.oauth.access).to.be('access');
+      });
+
+      it('should redirect to /', function() {
+        expect(res.redirect.calledWith('/')).to.be.ok();
+      });
     });
 
     describe('when not authorized', function() {
-      it('should redirect to /error');
+      beforeEach(function() { 
+        makeClientTrhowErrorOn('requestAccess');
+        controller.afterAuth(req, res);
+      });
+
+      it('should redirect to /error', function() {
+        expect(res.redirect.calledWith('/error')).to.be.ok();
+      });
     });
+    
   });
+  
+  function fakeClient(error) {
+    var client = {};
+
+    client.requestAuthorization = function(cb) {
+      cb(error, 'oauth', 'twitter.com/oauth');
+    };
+    
+    client.requestAccess = function(oa, cb) {
+      cb(error, 'access');
+    };
+    
+    return client;
+  }
+
+  function makeClientTrhowErrorOn(prop) {
+    client[prop] = function() {
+      for(var key in arguments) {
+        var value = arguments[key];
+        (typeof(value) === 'function') && (value('error'));
+      }
+    };
+  }
 });
