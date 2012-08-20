@@ -1,5 +1,9 @@
 extends layout
 
+block login
+  a#login.btn.btn-inverse(href="/logout")
+    | Logout
+
 block content
   section#main
     ol#messages

@@ -39,7 +39,6 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-// factory
 var factory = {
   http: require(__dirname+'/app/controllers/http'),
   twitter: require(__dirname+'/app/models/twitter.client')
@@ -50,12 +49,12 @@ var domain = app.get('host') + ':' + app.get('port');
 var client = factory.twitter.create(domain, oauth);
 var controller = factory.http.create(client);
 
-// routes:
+// http routes:
 app.get('/', controller.index);
 app.get('/login', controller.login);
 app.get('/error', controller.error);
-app.get('/auth/twitter', controller.auth);
-app.get('/auth/twitter/callback', controller.afterAuth);
+app.get('/auth', controller.auth);
+app.get('/callback', controller.afterAuth);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
