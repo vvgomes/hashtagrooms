@@ -15,7 +15,7 @@ function compile(str, path) {
     .use(nib());
 }
 
-app.configure(function(){
+app.configure(function() {
   app.set('port', process.env.PORT || 3000);
   app.set('host', os.hostname());
   app.set('views', __dirname + '/app/views');
@@ -39,15 +39,16 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+// factory
 var factory = {
-  controller: require(__dirname+'/app/controller'),
+  http: require(__dirname+'/app/controllers/http'),
   twitter: require(__dirname+'/app/models/twitter.client')
 };
 
 // controller setup:
 var domain = app.get('host') + ':' + app.get('port');
 var client = factory.twitter.create(domain, oauth);
-var controller = factory.controller.create(client);
+var controller = factory.http.create(client);
 
 // routes:
 app.get('/', controller.index);

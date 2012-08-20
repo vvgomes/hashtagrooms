@@ -14,5 +14,5 @@ spec.models:
 
 spec.controllers:
 	@NODE_ENV=spec \
-	./node_modules/.bin/mocha ./spec/controller.spec.js \
+	./node_modules/.bin/mocha ./spec/controllers/*.spec.js \
 	--reporter spec

@@ -1,8 +1,8 @@
 var expect = require('expect.js');
 var sinon = require('sinon');
-var factory = require(__dirname+'/../app/controller');
+var factory = require(__dirname+'/../../app/controllers/http');
 
-describe('controller', function() {
+describe('http controller', function() {
   var controller;
   var req;
   var res;
