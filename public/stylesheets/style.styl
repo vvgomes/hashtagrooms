@@ -8,24 +8,31 @@ $DEFAULT-SPACING = 10px
   box-sizing border-box
 
 body
+  margin-top 40px
   font-family 'Helvetica Neue', Arial, sans-serif
   background #C0DEED url('http://a0.twimg.com/images/themes/theme1/bg.png') fixed no-repeat
 
 header
-  fixed top 0 left 0
-  width 100%
   height $HEADER-HEIGHT
+  padding-left 50px
+  padding-right 50px
+  padding-bottom 5px
   color #CCC
-  font-size 13px
   background linear-gradient(#444, #111)
   box-shadow 0 0 10px black
-  #logo
+  a#home.brand
+    font-size 22px
+    font-weight 100
+  i.nav-topics
+    background-image url('https://si0.twimg.com/a/1345161153/t1/img/twitter_web_sprite_icons.png')
+    background-position -40px -110px
+    background-repeat no-repeat
     float left
-  #identity
+    height 24px
+    width 23px
+  a#login
     float right
-
-#login
-  absolute top 6px right 10px
+    font-weight 100
 
 section#main
   width 900px

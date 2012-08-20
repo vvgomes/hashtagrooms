@@ -17,7 +17,7 @@ describe('http controller', function() {
 
   describe('#index', function() {
 
-    describe('when the user is not logge  d in', function() {
+    describe('when the user is not logged in', function() {
       it('should redirect to /login', function() {
         controller.index(req, res);
         expect(res.redirect.calledWith('/login')).to.be.ok();

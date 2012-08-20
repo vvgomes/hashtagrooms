@@ -5,7 +5,7 @@ exports.create = function(domain, OAuth) {
     auth: 'https://twitter.com/oauth/authenticate?oauth_token=',
     requestToken: 'https://api.twitter.com/oauth/request_token',
     accessToken: 'https://api.twitter.com/oauth/access_token',
-    callback: 'http://'+domain+'/auth/twitter/callback'
+    callback: 'http://'+domain+'/callback'
   };
 
   var twitterApp = {
