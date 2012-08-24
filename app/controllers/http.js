@@ -2,11 +2,11 @@ exports.create = function(client) {
   var controller = {};
 
   controller.index = function(req, res) {
-    req.session.oauth ? res.render('index') : res.redirect('/login');
+    loggedIn(req) ? res.render('index') : res.redirect('/login');
   };
 
   controller.login = function(req, res) {
-    res.render('login')
+    loggedIn(req) ? res.redirect('/') : res.render('login')
   };
 
   controller.error = function(req, res) {
@@ -14,6 +14,7 @@ exports.create = function(client) {
   };
 
   controller.auth = function(req, res) {
+    loggedIn(req) ? res.redirect('/') :
     client.requestAuthorization(function(error, oauth, url) {
       req.session.oauth = oauth;
       res.redirect( error ? '/error' : url );
@@ -27,6 +28,8 @@ exports.create = function(client) {
       res.redirect( error ? '/error' : '/' );
     });
   };
+
+  function loggedIn(req) { return req.session.oauth; }
 
   return controller;
 };

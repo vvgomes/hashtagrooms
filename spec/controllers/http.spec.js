@@ -25,7 +25,7 @@ describe('http controller', function() {
     });
 
     describe('when the user is logged in', function() {
-      beforeEach(function() { req.session.oauth = {}; });
+      beforeEach(function() { login(); });
 
       it('should render index view', function() {
         controller.index(req, res);
@@ -35,10 +35,22 @@ describe('http controller', function() {
   });
 
   describe('#login', function() {
-    it('should render login view', function() {
-      controller.login(req, res);
-      expect(res.render.calledWith('login')).to.be.ok();
+
+    describe('when the user is not logged in', function() {
+      it('should render login view', function() {
+        controller.login(req, res);
+        expect(res.render.calledWith('login')).to.be.ok();
+      });
     });
+
+    describe('when the user is logged in', function() {
+      beforeEach(function() { login(); });
+
+      it('should redirect to /', function() {
+        controller.login(req, res);
+        expect(res.redirect.calledWith('/')).to.be.ok();
+      });
+    });    
   });
 
   describe('#error', function() {
@@ -50,30 +62,42 @@ describe('http controller', function() {
 
   describe('#auth', function() {
 
-    describe('for a successful connection', function() {
-      beforeEach(function() {
-        controller.auth(req, res);
+    describe('when the user is not logged in', function() {
+
+      describe('for a successful connection', function() {
+        beforeEach(function() {
+          controller.auth(req, res);
+        });
+
+        it('should persist the authorization in the session', function() {
+          expect(req.session.oauth).to.be('oauth');
+        });
+        
+        it('should redirect to the twitter login url', function() {
+          expect(res.redirect.calledWith('twitter.com/oauth')).to.be.ok();
+        });
       });
 
-      it('should persist the authorization in the session', function() {
-        expect(req.session.oauth).to.be('oauth');
-      });
-      
-      it('should redirect to the twitter login url', function() {
-        expect(res.redirect.calledWith('twitter.com/oauth')).to.be.ok();
+      describe('for a failed connection', function() {
+        beforeEach(function() {
+          makeClientTrhowErrorOn('requestAuthorization');
+        });
+
+        it('should redirect to /error', function() {
+          controller.auth(req, res);
+          expect(res.redirect.calledWith('/error')).to.be.ok();
+        });
       });
     });
 
-    describe('for a failed connection', function() {
-      beforeEach(function() {
-        makeClientTrhowErrorOn('requestAuthorization');
-        controller.auth(req, res);
-      });
+    describe('when the user is logged in', function() {
+      beforeEach(function() { login(); });
 
-      it('should redirect to /error', function() {
-        expect(res.redirect.calledWith('/error')).to.be.ok();
+      it('should redirect to /', function() {
+        controller.auth(req, res);
+        expect(res.redirect.calledWith('/')).to.be.ok();
       });
-    });
+    });    
   });
 
   describe('#afterAuth', function() {
@@ -135,4 +159,9 @@ describe('http controller', function() {
       }
     };
   }
+
+  function login() {
+    req.session.oauth = {};
+  }
+
 });
