@@ -101,40 +101,57 @@ describe('http controller', function() {
   });
 
   describe('#afterAuth', function() {
-    beforeEach(function() {
-      req.session.oauth = {};
-      req.query.oauth_verifier = 'verifier';
+
+    describe('when the user is not logged in', function() {
+
+      beforeEach(function() {
+        req.session.oauth = {};
+        req.query.oauth_verifier = 'verifier';
+      });
+
+      describe('when authorized', function() {
+        beforeEach(function() {
+          controller.afterAuth(req, res);
+        });
+
+        it('should persist the verifier in the session', function() {
+          expect(req.session.oauth.verifier).to.be('verifier');
+        });
+
+        it('should persist the access token in the session', function() {
+          expect(req.session.oauth.access).to.be('access');
+        });
+
+        it('should redirect to /', function() {
+          expect(res.redirect.calledWith('/')).to.be.ok();
+        });
+      });
+
+      describe('when not authorized', function() {
+        beforeEach(function() { 
+          makeClientTrhowErrorOn('requestAccess');
+          controller.afterAuth(req, res);
+        });
+
+        it('should redirect to /error', function() {
+          expect(res.redirect.calledWith('/error')).to.be.ok();
+        });
+      });
+
     });
 
-    describe('when authorized', function() {
-      beforeEach(function() {
-        controller.afterAuth(req, res);
-      });
-
-      it('should persist the verifier in the session', function() {
-        expect(req.session.oauth.verifier).to.be('verifier');
-      });
-
-      it('should persist the access token in the session', function() {
-        expect(req.session.oauth.access).to.be('access');
+    describe('when the user is logged in', function() {
+      beforeEach(function() { 
+        client.requestAccess = sinon.spy();
+        login(); 
       });
 
       it('should redirect to /', function() {
-        expect(res.redirect.calledWith('/')).to.be.ok();
-      });
-    });
-
-    describe('when not authorized', function() {
-      beforeEach(function() { 
-        makeClientTrhowErrorOn('requestAccess');
         controller.afterAuth(req, res);
-      });
-
-      it('should redirect to /error', function() {
-        expect(res.redirect.calledWith('/error')).to.be.ok();
+        expect(res.redirect.calledWith('/')).to.be.ok();
+        expect(client.requestAccess.called).to.not.be.ok();
       });
     });
-    
   });
   
   function fakeClient(error) {
@@ -161,7 +178,6 @@ describe('http controller', function() {
   }
 
   function login() {
-    req.session.oauth = {};
+    req.session.oauth = { verifier: {} };
   }
-
 });

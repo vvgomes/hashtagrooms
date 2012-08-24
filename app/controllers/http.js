@@ -22,14 +22,19 @@ exports.create = function(client) {
   };
 
   controller.afterAuth = function(req, res) {
-    req.session.oauth.verifier = req.query.oauth_verifier
+    if(loggedIn(req)) { res.redirect('/'); return; }
+
+    req.session.oauth.verifier = req.query.oauth_verifier;
     client.requestAccess(req.session.oauth, function(error, access) {
       req.session.oauth.access = access;
       res.redirect( error ? '/error' : '/' );
     });
   };
 
-  function loggedIn(req) { return req.session.oauth; }
+  function loggedIn(req) { 
+    var oa = req.session.oauth;
+    return oa && oa.verifier;
+  }
 
   return controller;
 };
