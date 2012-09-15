@@ -4,13 +4,10 @@ html
     title #hashtagRooms
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(type='text/javascript', src='/javascripts/zepto.js')
     script(type='text/javascript', src='/javascripts/application.js')
   body
-    header.navbar.navbar-fixed-top
+    header
       a#home.brand(href="/")
-        i.nav-topics
-        | hashtagRooms
-
+        | #HashtagRooms
       block login
     block content

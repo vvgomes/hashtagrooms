@@ -1,3 +1,6 @@
+#logo{position:relative;width:50px;height:50px;line-height:50px;font-family:monospace;font-size:45px;background-color:#05c5ca;color:#fff;text-align:center;-webkit-border-radius:7.5px;border-radius:7.5px;text-shadow:1px 1px 2px rgba(0,0,0,0.5);}
+#logo:before{content:"#"}
+#logo:after{content:"";position:absolute;border-width:5px;bottom:-10px;right:10px;border-style:solid;border-color:#05c5ca transparent transparent}
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-family:inherit;font-size:100%;vertical-align:baseline}
 body{line-height:1;color:#000;background:#fff}
 ol,ul{list-style:none}
@@ -5,10 +8,10 @@ table{border-collapse:separate;border-spacing:0;vertical-align:middle}
 caption,th,td{text-align:left;font-weight:normal;vertical-align:middle}
 a img{border:none}
 *{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
-body{margin-top:40px;font-family:'Helvetica Neue',Arial,sans-serif;background:#c0deed url("http://a0.twimg.com/images/themes/theme1/bg.png") fixed no-repeat}
-header{height:40px;padding-left:50px;padding-right:50px;padding-bottom:5px;color:#ccc;background:-webkit-gradient(linear, left top, left bottom, color-stop(0, #444), color-stop(1, #111));background:-webkit-linear-gradient(top, #444 0%, #111 100%);background:-moz-linear-gradient(top, #444 0%, #111 100%);background:-o-linear-gradient(top, #444 0%, #111 100%);background:-ms-linear-gradient(top, #444 0%, #111 100%);background:linear-gradient(top, #444 0%, #111 100%);-webkit-box-shadow:0 0 10px #000;box-shadow:0 0 10px #000;}
-header a#home.brand{font-size:22px;font-weight:100}
-header i.nav-topics{background-image:url("https://si0.twimg.com/a/1345161153/t1/img/twitter_web_sprite_icons.png");background-position:-40px -110px;background-repeat:no-repeat;float:left;height:24px;width:23px}
-header a#login{float:right;font-weight:100}
+body{font-family:'Helvetica Neue',Arial,sans-serif}
+header{height:40px;padding:5px;padding-left:50px;padding-right:50px;background:-webkit-gradient(linear, left top, left bottom, color-stop(0, #444), color-stop(1, #111));background:-webkit-linear-gradient(top, #444 0%, #111 100%);background:-moz-linear-gradient(top, #444 0%, #111 100%);background:-o-linear-gradient(top, #444 0%, #111 100%);background:-ms-linear-gradient(top, #444 0%, #111 100%);background:linear-gradient(top, #444 0%, #111 100%);-webkit-box-shadow:0 0 10px #000;box-shadow:0 0 10px #000;}
+header a#home.brand{font-size:22px;font-weight:100;color:#fff;text-decoration:none}
+header i.nav-topics{float:left;height:24px;width:23px}
+header a#login{float:right;width:90px;padding-right:0;font-size:14px;background-image:url("/images/t.png");background-position:1px 1px;background-repeat:no-repeat}
 section#main{width:900px;height:100%;margin:0 auto 0 auto;background:rgba(255,255,255,0.3);padding:50px 10px 40px 10px;-webkit-border-radius:0 0 10px 10px;border-radius:0 0 10px 10px;}
 section#main #send{position:absolute;bottom:10px;left:10px;right:10px}

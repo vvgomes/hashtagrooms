@@ -1,7 +1,7 @@
 @import 'nib'
 @import 'logo'
-global-reset()
 
+global-reset()
 $HEADER-HEIGHT = 40px
 $DEFAULT-SPACING = 10px
 
@@ -9,31 +9,32 @@ $DEFAULT-SPACING = 10px
   box-sizing border-box
 
 body
-  margin-top 40px
   font-family 'Helvetica Neue', Arial, sans-serif
-  background #C0DEED url('http://a0.twimg.com/images/themes/theme1/bg.png') fixed no-repeat
 
 header
   height $HEADER-HEIGHT
+  padding 5px
   padding-left 50px
   padding-right 50px
-  padding-bottom 5px
-  color #CCC
   background linear-gradient(#444, #111)
   box-shadow 0 0 10px black
   a#home.brand
     font-size 22px
     font-weight 100
+    color white
+    text-decoration none
   i.nav-topics
-    background-image url('https://si0.twimg.com/a/1345161153/t1/img/twitter_web_sprite_icons.png')
-    background-position -40px -110px
-    background-repeat no-repeat
     float left
     height 24px
     width 23px
   a#login
     float right
-    font-weight 100
+    width 90px
+    padding-right 0
+    font-size 14px
+    background-image url('/images/t.png')
+    background-position 1px 1px
+    background-repeat no-repeat
 
 section#main
   width 900px
